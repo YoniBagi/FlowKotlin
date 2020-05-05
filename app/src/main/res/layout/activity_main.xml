@@ -4,8 +4,8 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="activity"
-            type="com.bagi.flowkotlin.activity.covid19.Covid19Activity" />
+            name="viewModel"
+            type="com.bagi.flowkotlin.activity.covid19.Covid19ActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text='@{@string/title + " " + activity.getDateUpdated()}'
+            android:text="@{@string/title(viewModel.getUpdatedMLd())}"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             android:id="@+id/pbData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{activity.getProgressUi() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.getProgressDataMLD() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
+
         <variable
             name="detailsAdapter"
             type="com.bagi.flowkotlin.activity.covid19.DetailsCovidAdapter" />
+
         <variable
-            name="details"
-            type="kotlin.Triple" />
+            name="cardDetails"
+            type="com.bagi.flowkotlin.model.Card" />
+
+
     </data>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_card_details"
-    android:padding="10dp"
-    app:cardCornerRadius="20dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginStart="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="30dp">
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_card_details"
+        android:padding="10dp"
+        app:cardCornerRadius="20dp">
 
-        <TextView
-            android:id="@+id/titleDetails"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="17sp"/>
+            android:layout_gravity="center"
+            android:layout_margin="30dp">
 
-        <TextView
-            android:id="@+id/numberDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="123,123"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleDetails"
-            android:layout_marginTop="5dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/titleDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{context.getString(cardDetails.resStringTitle)}"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/numberDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@{cardDetails.stringDetail}"
+                android:textColor="@{ContextCompat.getColor(context, cardDetails.textColorToShow)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleDetails"
+                tools:text="123,123" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 </layout>

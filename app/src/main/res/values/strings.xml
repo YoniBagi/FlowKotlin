@@ -7,6 +7,6 @@
     <string name="tests">Tests</string>
     <string name="recovered">Recovered</string>
     <string name="critical">Critical</string>
-    <string name="title">Israel   Updated: </string>
+    <string name="title">Israel updated: %s</string>
     <string name="updated">updated</string>
 </resources>

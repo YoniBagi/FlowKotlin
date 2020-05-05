@@ -1,23 +1,18 @@
 package com.bagi.flowkotlin.activity.covid19
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bagi.flowkotlin.R
 import com.bagi.flowkotlin.databinding.CardDetailsLayoutBinding
+import com.bagi.flowkotlin.model.Card
 
-class DetailsCovidAdapter (private val listDetails: MutableList<Triple<Int, Int?, Int?>>):
+class DetailsCovidAdapter(private val listDetails: MutableList<Card>) :
     RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = DataBindingUtil.inflate<CardDetailsLayoutBinding>(
-            LayoutInflater.from(parent.context),
-            R.layout.card_details_layout,
-            parent,
-            false
-        )
-        return ViewHolder(binding)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = CardDetailsLayoutBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -25,15 +20,14 @@ class DetailsCovidAdapter (private val listDetails: MutableList<Triple<Int, Int?
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(listDetails[position])
+        holder.onBind(listDetails[position], holder.itemView.context)
     }
 }
 
-class ViewHolder(private val view: CardDetailsLayoutBinding) :RecyclerView.ViewHolder(view.root){
-    fun onBind(triple: Triple<Int, Int?, Int?>) {
-        view.titleDetails.text = view.titleDetails.resources.getString(triple.first)
-        view.numberDetails.text = triple.second.toString()
-        triple.third?.let { view.numberDetails.setTextColor(ContextCompat.getColor(view.numberDetails.context, it)) }
+class ViewHolder(private val view: CardDetailsLayoutBinding) : RecyclerView.ViewHolder(view.root) {
+    fun onBind(card: Card, context: Context) {
+        view.cardDetails = card
+        view.executePendingBindings()
     }
 
 }
