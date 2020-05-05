@@ -23,11 +23,6 @@ class Covid19Activity : AppCompatActivity() {
         setVM()
     }
 
-    override fun onResume() {
-        super.onResume()
-        covid19ActivityViewModel.getCountryData()
-    }
-
     private fun setVM() {
         covid19ActivityViewModel = ViewModelProviders.of(this).get(Covid19ActivityViewModel::class.java)
         covid19ActivityViewModel.getCountryDetailsMLD().observe(this, Observer {fetchDataSuccess(it)})

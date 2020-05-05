@@ -10,25 +10,29 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Covid19ActivityViewModel : ViewModel() {
-    private val countryDetailsMLD = MutableLiveData<MutableList<Triple<Int, Int?, Int?>>>()
-    private val progressDataMLD = MutableLiveData<Boolean>()
-    private val updatedMLd = MutableLiveData<String>()
+    private val _countryDetailsMLD = MutableLiveData<MutableList<Triple<Int, Int?, Int?>>>()
+    private val _progressDataMLD = MutableLiveData<Boolean>()
+    private val _updatedMLd = MutableLiveData<String>()
 
-    fun getCountryDetailsMLD(): LiveData<MutableList<Triple<Int, Int?, Int?>>> = countryDetailsMLD
-    fun getProgressDataMLD(): LiveData<Boolean> = progressDataMLD
-    fun getUpdatedMLd(): LiveData<String> = updatedMLd
+    fun getCountryDetailsMLD(): LiveData<MutableList<Triple<Int, Int?, Int?>>> = _countryDetailsMLD
 
+    fun getProgressDataMLD(): LiveData<Boolean> = _progressDataMLD
+    fun getUpdatedMLd(): LiveData<String> = _updatedMLd
 
-    fun getCountryData(){
+    init {
+        getCountryData()
+    }
+
+    private fun getCountryData(){
         viewModelScope.launch {
             val countryDetails = Covid19ActivityModel.getCountryDetails()
-                    .onStart { progressDataMLD.value = true }
-                    .onCompletion { progressDataMLD.value = false }
+                    .onStart { _progressDataMLD.value = true }
+                    .onCompletion { _progressDataMLD.value = false }
                     .catch { Log.e("${Covid19ActivityViewModel::class.java.name}: getCountryData()",
                         "Error fetch data") }
                     .singleOrNull()
-            countryDetailsMLD.value = getListFRomObject(countryDetails)
-            updatedMLd.value = convertLongToTime(countryDetails?.updated)
+            _countryDetailsMLD.value = getListFRomObject(countryDetails)
+            _updatedMLd.value = convertLongToTime(countryDetails?.updated)
         }
     }
 
