@@ -20,12 +20,12 @@ class DetailsCovidAdapter(private val listDetails: MutableList<Card>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(listDetails[position], holder.itemView.context)
+        holder.onBind(listDetails[position])
     }
 }
 
 class ViewHolder(private val view: CardDetailsLayoutBinding) : RecyclerView.ViewHolder(view.root) {
-    fun onBind(card: Card, context: Context) {
+    fun onBind(card: Card) {
         view.cardDetails = card
         view.executePendingBindings()
     }
