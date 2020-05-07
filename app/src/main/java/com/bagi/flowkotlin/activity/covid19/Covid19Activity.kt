@@ -24,7 +24,6 @@ class Covid19Activity : AppCompatActivity() {
 
         binding.viewModel = covid19ActivityViewModel
         binding.lifecycleOwner = this
-        setVM()
     }
 
     private fun setVM() {
