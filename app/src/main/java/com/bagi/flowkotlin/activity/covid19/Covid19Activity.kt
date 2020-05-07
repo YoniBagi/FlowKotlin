@@ -19,7 +19,10 @@ class Covid19Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        binding.viewModel = Covid19ActivityViewModel()
+
+        setVM()
+
+        binding.viewModel = covid19ActivityViewModel
         binding.lifecycleOwner = this
         setVM()
     }
