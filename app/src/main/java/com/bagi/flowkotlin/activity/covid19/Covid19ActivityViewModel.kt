@@ -1,6 +1,5 @@
 package com.bagi.flowkotlin.activity.covid19
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.bagi.flowkotlin.R
@@ -12,14 +11,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Covid19ActivityViewModel : ViewModel() {
-    private val _countryDetailsMLD = MutableLiveData<MutableList<Card>>()
-    private val _progressDataMLD = MutableLiveData<Boolean>()
-    private val _updatedMLd = MutableLiveData<String>()
+    private val countryDetailsMLD = MutableLiveData<MutableList<Card>>()
+    private val progressDataMLD = MutableLiveData<Boolean>()
+    private val updatedMLd = MutableLiveData<String>()
 
-    fun getCountryDetailsMLD(): LiveData<MutableList<Card>> = _countryDetailsMLD
-
-    fun getProgressDataMLD(): LiveData<Boolean> = _progressDataMLD
-    fun getUpdatedMLd(): LiveData<String> = _updatedMLd
+    fun getCountryDetailsMLD(): LiveData<MutableList<Card>> = countryDetailsMLD
+    fun getProgressDataMLD(): LiveData<Boolean> = progressDataMLD
+    fun getUpdatedMLd(): LiveData<String> = updatedMLd
 
     init {
         getCountryData()
@@ -29,14 +27,14 @@ class Covid19ActivityViewModel : ViewModel() {
         viewModelScope.launch {
             val countryDetails = Covid19ActivityModel.getCountryDetails()
                     .onStart { 
-                        _progressDataMLD.value = true
-                    _updatedMLd.value = "waiting..."}
-                    .onCompletion { _progressDataMLD.value = false }
+                        progressDataMLD.value = true
+                    updatedMLd.value = "waiting..."}
+                    .onCompletion { progressDataMLD.value = false }
                     .catch { Log.e("${Covid19ActivityViewModel::class.java.name}: getCountryData()",
                         "Error fetch data") }
                     .singleOrNull()
-            _countryDetailsMLD.value = getListFRomObject(countryDetails!!)
-            _updatedMLd.value = convertLongToTime(countryDetails.updated)
+            countryDetailsMLD.value = countryDetails?.let { getListFRomObject(it) }
+            updatedMLd.value = convertLongToTime(countryDetails?.updated)
         }
     }
 
